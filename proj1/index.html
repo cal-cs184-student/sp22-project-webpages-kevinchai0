@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
     <title>
-        CS 184 Project 1: Rasterizer - HackMD
+        CS 184 Project 1: Rasterizer - Kenny &amp; Kevin Ch(a)i - HackMD
     </title>
     <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
     <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
@@ -34,7 +34,7 @@
 </head>
 
 <body>
-    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="CS-184-Project-1-Rasterizer" data-id="CS-184-Project-1-Rasterizer"><a class="anchor hidden-xs" href="#CS-184-Project-1-Rasterizer" title="CS-184-Project-1-Rasterizer"><span class="octicon octicon-link"></span></a><span>CS 184 Project 1: Rasterizer</span></h1><p><span>This assignment involved creating a rasterizer that could draw triangles, supersample, and map textures with anti-aliasing. We thoroughly enjoyed how interactive/visual the entire project was. It was super satisfying to see the output of our code after we finished each task. It was also fun to create our own .svg files for some of the tasks. Overall, our final product was super fun to use to draw .svg files we found online.</span></p><h1 id="Task-1-Drawing-Single-Color-Triangles" data-id="Task-1-Drawing-Single-Color-Triangles"><a class="anchor hidden-xs" href="#Task-1-Drawing-Single-Color-Triangles" title="Task-1-Drawing-Single-Color-Triangles"><span class="octicon octicon-link"></span></a><span>Task 1: Drawing Single-Color Triangles</span></h1><p><span>In this first task, we were asked to rasterize single-colored triangles.</span></p><p><span>In order to rasterize the triangles, we first needed to determine where our starting and ending points were. We decided to start at the top left and go end up at the bottom right. We basically used the Point-in-Triangle test to determine if we should rasterize a certain point or not and did this until we reached our ending point.</span></p><p><img src="https://i.imgur.com/M2520oS.jpg" alt="" loading="lazy"></p><p><span>Our algorithm is no worse than one that checks each sample within the bounding box of the triangle because that’s exactly what our code does. Our code determines whether or not each simple is within our bounding box given by the 3 lines created from the 3 pairs of points. We used the Point-In-Triangle test to determine if the sample was inside our bounding box.</span></p><p><span>The following is a screenshot of test4.svg with the pixel inspector zoomed in on one of the vertices of a triangle.</span><br>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="CS-184-Project-1-Rasterizer---Kenny-amp-Kevin-Chai" data-id="CS-184-Project-1-Rasterizer---Kenny-amp-Kevin-Chai"><a class="anchor hidden-xs" href="#CS-184-Project-1-Rasterizer---Kenny-amp-Kevin-Chai" title="CS-184-Project-1-Rasterizer---Kenny-amp-Kevin-Chai"><span class="octicon octicon-link"></span></a><span>CS 184 Project 1: Rasterizer - Kenny &amp; Kevin Ch(a)i</span></h1><p><span>This assignment involved creating a rasterizer that could draw triangles, supersample, and map textures with anti-aliasing. We thoroughly enjoyed how interactive/visual the entire project was. It was super satisfying to see the output of our code after we finished each task. It was also fun to create our own .svg files for some of the tasks. Overall, our final product was super fun to use to draw .svg files we found online.</span></p><h1 id="Task-1-Drawing-Single-Color-Triangles" data-id="Task-1-Drawing-Single-Color-Triangles"><a class="anchor hidden-xs" href="#Task-1-Drawing-Single-Color-Triangles" title="Task-1-Drawing-Single-Color-Triangles"><span class="octicon octicon-link"></span></a><span>Task 1: Drawing Single-Color Triangles</span></h1><p><span>In this first task, we were asked to rasterize single-colored triangles.</span></p><p><span>In order to rasterize the triangles, we first needed to determine where our starting and ending points were. We decided to start at the top left and go end up at the bottom right. We basically used the Point-in-Triangle test to determine if we should rasterize a certain point or not and did this until we reached our ending point.</span></p><p><img src="https://i.imgur.com/M2520oS.jpg" alt="" loading="lazy"></p><p><span>Our algorithm is no worse than one that checks each sample within the bounding box of the triangle because that’s exactly what our code does. Our code determines whether or not each simple is within our bounding box given by the 3 lines created from the 3 pairs of points. We used the Point-In-Triangle test to determine if the sample was inside our bounding box.</span></p><p><span>The following is a screenshot of test4.svg with the pixel inspector zoomed in on one of the vertices of a triangle.</span><br>
 <img src="https://i.imgur.com/DdHzZLm.png" alt="" loading="lazy"></p><h3 id="Data-Structures" data-id="Data-Structures"><a class="anchor hidden-xs" href="#Data-Structures" title="Data-Structures"><span class="octicon octicon-link"></span></a><span>Data Structures</span></h3><p><span>We also created the bounds for the outer for loops in </span><code>rasterize_triangle</code><span> using two float arrays. The first one represents the top left corner of the triangle and the bottom represents the bottom right corner.</span></p><pre><code>float start[] = { max(float(0.0), min(x0, min(x1, x2))), max(float(0.0), min(y0, min(y1, y2)))};
 float end[] = {min((float)width, max(x0, max(x1, x2))), min((float)height, max(y0, max(y1, y2)))};
 </code></pre><p><span>The last data structure that we used was a float array to hold the point that we are currently sampling at.</span></p><pre><code>float pt[] = {(float)x + float(i * 1.0/sqrt(sample_rate)) + float(1.0/sqrt(sample_rate * 2)) , (float)y + float(j * 1.0/sqrt(sample_rate)) + float(1.0/sqrt(sample_rate * 2))};
@@ -77,7 +77,7 @@ float end[] = {min((float)width, max(x0, max(x1, x2))), min((float)height, max(y
         }
     }
 </code></pre><p><span>This nested loop contains the same point-in-triangle check that we used before, the only difference being that now we need to do some extra math in order to account for the different sampling spots in each pixel.</span></p><p><span>The offset that we used for both the x and y is </span><code>float([i/j] * 1.0/sqrt(sample_rate)) + float(1.0/sqrt(sample_rate * 2)</code><span>. This offset accounts for which sub-pixel we are located in (using i and j), and then offsets to the center of that pixel with the second square root portion.</span></p><p><span>One of the challenges that we came across was figuring out how to store this information inside of sample_buffer and retrieve it later to downsample. What helped our group out was drawing a sample diagram of the pixels and how we were going to store them.</span><br>
-<img src="https://i.imgur.com/8snSYLs.jpg" alt="Imgur" loading="lazy"><br>
+<img src="https://i.imgur.com/8snSYLsm.jpg" alt="Imgur" loading="lazy"><br>
 <span>This image shows a sample_rate of 4 on a 2x2 pixel image.</span></p><p><span>This allowed us to come up with the new formula </span><code>sample_buffer[(y * (int)sqrt(sample_rate) + j) * width * (int)sqrt(sample_rate) + x * (int)sqrt(sample_rate) + i] = color;</code><span> for storing the colors.</span><br>
 <span>(The math corresponds exactly to the integers above)</span></p><h3 id="Sample-Images" data-id="Sample-Images"><a class="anchor hidden-xs" href="#Sample-Images" title="Sample-Images"><span class="octicon octicon-link"></span></a><span>Sample Images</span></h3><p><strong><span>Supersample rate 1 per pixel</span></strong><br>
 <img src="https://i.imgur.com/syk52jv.png" alt="Imgur" loading="lazy"><br>
@@ -87,26 +87,105 @@ float end[] = {min((float)width, max(x0, max(x1, x2))), min((float)height, max(y
 <img src="https://i.imgur.com/LGRoE4W.png" alt="Imgur" loading="lazy"></p><p><span>As you can see, the intermediate pixel values in the supersampling 4 and 16 rates fill in the caps of the first picture. This antialiasing creates a much smoother triangle, which is especially emphasized in a skinny edge triangle like the one above. These intermediate values are a result of the extra sampling done on the thinner edge, which catches more of the red values that the regular sample rate of 1 might not have caught. Those values get averaged with surrounding background values and gives us the transition gradient that we can observe.</span></p><h1 id="Task-3-Transforms" data-id="Task-3-Transforms"><a class="anchor hidden-xs" href="#Task-3-Transforms" title="Task-3-Transforms"><span class="octicon octicon-link"></span></a><span>Task 3: Transforms</span></h1><p><span>This task involved us implmenting the scale, rotate, and translate transformations. The 3 transform functions were pretty easy to implement thanks to us referencing the lecture slides. We were able to easily define the transformation 3x3 matrices thanks to the following slide.</span><br>
 <img src="https://i.imgur.com/pv83VRJ.jpg" alt="" loading="lazy"><br>
 <span>We were trying to make cubeman dance or hit a dancing pose. Cubeman’s left arm is in the air and feet are grounded. Cubeman’s right arm is arched a little and to his side. Creating the new Cubeman was pretty simple. I just looked at the robot.svg file and tried to play around with different transformations. Initially, it was difficult to figure out where to place rotations. After some trial and error, it was pretty simple to understand how to move certain parts of cubeman and make small changes to his arms and legs!</span><br>
-<img src="https://i.imgur.com/OJ8Qoaz.png" alt="" loading="lazy"></p><h1 id="Task-4-Barycentric-coordinates" data-id="Task-4-Barycentric-coordinates"><a class="anchor hidden-xs" href="#Task-4-Barycentric-coordinates" title="Task-4-Barycentric-coordinates"><span class="octicon octicon-link"></span></a><span>Task 4: Barycentric coordinates!</span></h1><p><span>This task involved implementing baycentric interpolation.</span></p><p><span>We first had to find the baycentric coordinates of our triangle. Baycentric coordinates are coordinates that are determined by the weights of the vertices of a triangle. Normally the baycentric coordinates are inside the triangle if the vertices are all non-negative. The baycentric coordinate system is represented in alpha, beta, and gamma values which sum to 1. The below image shows how we can convert from a 2D-coordinate system to baycentric one.</span></p><p><img src="https://i.imgur.com/rHPYKjp.jpg" alt="" loading="lazy"></p><p><span>The following example explains baycentric coordinates more visually. We give each vertex a color (RED, GREEN, BLUE). Then the rest of the triangle can be colored by calculating the baycentric coordinates and interpolating.</span></p><p><img src="https://i.imgur.com/215hb34.png" alt="Imgur" loading="lazy"></p><p><span>The reason why we use Barycentric coordinates as opposed to Cartesian is that we can define a point with respect to </span><code>n+1</code><span> other points instead of just with respect to the origin. This allows us to more easily apply gradients of colors and </span><a href="#-Task-5:-%22Pixel-sampling%22-for-texture-mapping"><span>textures</span></a><span>, as we can move within respect to vertices of our triangle in this case.</span></p><p><span>The following is an image of test7.svg with default viewing parameters and sample rate 1.</span><br>
-<img src="https://i.imgur.com/fp3331X.png" alt="" loading="lazy"></p><h1 id="Task-5-“Pixel-sampling”-for-texture-mapping" data-id="Task-5-“Pixel-sampling”-for-texture-mapping"><a class="anchor hidden-xs" href="#Task-5-“Pixel-sampling”-for-texture-mapping" title="Task-5-“Pixel-sampling”-for-texture-mapping"><span class="octicon octicon-link"></span></a><span>Task 5: “Pixel sampling” for texture mapping</span></h1><p><span>In this task, we implemented texture sampling using nearest neighbor and bilinear interpolation. We are applying a 2D texture to a surface which is 2D or 3D. This allows us to create depth perception, shadows, reflections, projections, and a lot of other visual effects for our texture.</span></p><p><span>Pixel sampling allows us to apply textures to images. We implemented it by calculating the (u,v) coordinates using our baycentric coordinates. After getting the (u,v) coordinates, we used either the nearest neighbor or bilinear pixel sampling methods to determine the texture color.</span></p><p><span>The nearest neighbor sampling method takes in the (u,v) coordinates and then returns the texel closest to those coordinates.</span></p><p><span>Bilinear sampling is a little more complicated. Bilinear sampling takes in the (u,v) coordinates and then takes the 4 nearest texels and performs interpolation to return the average texel color. We followed the slide below to perform the lerps. We first did two linear interpolations horizontally and then one vertically to get our weighted average texel color of the 4 texels.</span><br>
-<img src="https://i.imgur.com/UopzL3x.jpg" alt="" loading="lazy"></p><p><span>We can notice in the examples below that bilinear sampling defeats nearest sampling. The edges are more smooth when lookng at the top of the Campanile using bilinear sampling. This makes sense because bilinear sampling takes more samples (4) than nearest sampling (1) meaning that the image created used bilinear sampling will be more accurate.</span></p><p><code>nearest sampling, subsample rate = 1</code><br>
-<img src="https://i.imgur.com/EDNuOR6.png" alt="" loading="lazy"></p><p><code>bilinear sampling, subsample rate = 1</code><br>
-<img src="https://i.imgur.com/C8fxYB9.png" alt="" loading="lazy"></p><p><code>nearest sampling, subsample rate = 16</code><br>
-<img src="https://i.imgur.com/BAVKUHK.png" alt="" loading="lazy"></p><p><code>bilinear sampling, subsample rate = 16</code><br>
-<img src="https://i.imgur.com/5TUPLjJ.png" alt="" loading="lazy"></p><p><span>Since nearest sampling only takes one sample to determine the texture color, bilinear sampling will generally perform better on images with higher frequency. This is because nearest sampling will tend to miss out on some data of the image whereas bilinear sampling does a better job at maintaing the data.</span></p><h1 id="Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping" data-id="Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping"><a class="anchor hidden-xs" href="#Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping" title="Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping"><span class="octicon octicon-link"></span></a><span>Task 6: “Level sampling” with mipmaps for texture mapping</span></h1><p><strong><span>Explain level sampling in your own words and describe how you implemented it for texture mapping.</span></strong></p><p><strong><span>Describe the tradeoffs between speed, memory usage, and antialiasing power between the three various techniques.</span></strong></p><p><span>These images are all with subsample rate = 1. Our childhood heroes: Minions.</span></p><p><code>LEVEL 0 BILINEAR PIXEL SAMPLING</code></p><p><img src="https://i.imgur.com/ZomznTZ.png" alt="" loading="lazy"><br>
-<code>LEVEL 0 NEAREST PIXEL SAMPLING</code></p><p><img src="https://i.imgur.com/NafrKck.png" alt="" loading="lazy"><br>
-<code>NEAREST LEVEL NEAREST PIXEL SAMPLING</code></p><p><img src="https://i.imgur.com/81FAdkW.png" alt="" loading="lazy"><br>
-<code>NEAREST LEVEL BILINEAR PIXEL SAMPLING</code></p><p><img src="https://i.imgur.com/arHA2fy.png" alt="" loading="lazy"><br>
-<code>BILINEAR LEVEL NEAREST PIXEL SAMPLING</code></p><p><img src="https://i.imgur.com/wN9GOOY.png" alt="" loading="lazy"><br>
-<code>BILINEAR LEVEL BILINEAR PIXEL SAMPLING</code></p><p><img src="https://i.imgur.com/pUutDKX.png" alt="" loading="lazy"></p></div>
+<img src="https://i.imgur.com/OJ8Qoaz.png" alt="" loading="lazy"></p><h1 id="Task-4-Barycentric-coordinates" data-id="Task-4-Barycentric-coordinates"><a class="anchor hidden-xs" href="#Task-4-Barycentric-coordinates" title="Task-4-Barycentric-coordinates"><span class="octicon octicon-link"></span></a><span>Task 4: Barycentric coordinates!</span></h1><p><span>This task involved implementing baycentric interpolation.</span></p><p><span>We first had to find the baycentric coordinates of our triangle. Baycentric coordinates are coordinates that are determined by the weights of the vertices of a triangle. Normally the baycentric coordinates are inside the triangle if the vertices are all non-negative. The baycentric coordinate system is represented in alpha, beta, and gamma values which sum to 1. The below image shows how we can convert from a 2D-coordinate system to baycentric one.</span></p><p><img src="https://i.imgur.com/rHPYKjp.jpg" alt="" loading="lazy"></p><p><span>The way that we calculated our barycentric coordinates is through the following slide. We checked whether a point was in the triangle by making sure that alpha, beta, and gamma were positive and that they added to 1.</span><br>
+<img src="https://i.imgur.com/OQc0jWl.png" alt="Imgur" loading="lazy"></p><p><span>The following example explains baycentric coordinates more visually. We give each vertex a color (RED, GREEN, BLUE). Then the rest of the triangle can be colored by calculating the baycentric coordinates and interpolating.</span></p><p><img src="https://i.imgur.com/215hb34.png" alt="Imgur" loading="lazy"></p><p><span>The reason why we use Barycentric coordinates as opposed to Cartesian is that we can define a point with respect to </span><code>n+1</code><span> other points instead of just with respect to the origin. This allows us to more easily apply gradients of colors and </span><a href="#-Task-5:-%22Pixel-sampling%22-for-texture-mapping"><span>textures</span></a><span>, as we can move within respect to vertices of our triangle in this case.</span></p><p><span>The following is an image of test7.svg with default viewing parameters and sample rate 1.</span><br>
+<img src="https://i.imgur.com/fp3331X.png" alt="" loading="lazy"></p><h1 id="Task-5-“Pixel-sampling”-for-texture-mapping" data-id="Task-5-“Pixel-sampling”-for-texture-mapping"><a class="anchor hidden-xs" href="#Task-5-“Pixel-sampling”-for-texture-mapping" title="Task-5-“Pixel-sampling”-for-texture-mapping"><span class="octicon octicon-link"></span></a><span>Task 5: “Pixel sampling” for texture mapping</span></h1><p><span>In this task, we implemented texture sampling using nearest neighbor and bilinear interpolation. We are applying a 2D texture to a surface which is 2D or 3D. This allows us to create depth perception, shadows, reflections, projections, and a lot of other visual effects for our texture.</span></p><h3 id="Different-sampling-methods" data-id="Different-sampling-methods"><a class="anchor hidden-xs" href="#Different-sampling-methods" title="Different-sampling-methods"><span class="octicon octicon-link"></span></a><span>Different sampling methods</span></h3><p><span>Pixel sampling allows us to apply textures to images. We implemented it by calculating the (u,v) coordinates using our baycentric coordinates. After getting the (u,v) coordinates, we used either the nearest neighbor or bilinear pixel sampling methods to determine the texture color.</span></p><p><span>The nearest neighbor sampling method takes in the (u,v) coordinates and then returns the color of the texel closest to those coordinates.</span></p><pre><code>int u = int(uv[0] * mip.width);
+int v = int(uv[1] * mip.height);
+</code></pre><p><span>Bilinear sampling is a little more complicated. Bilinear sampling takes in the (u,v) coordinates and then takes the 4 nearest texels and performs interpolation to return the average texel color. We followed the slide below to perform the lerps. We first did two linear interpolations horizontally and then one vertically to get our weighted average texel color of the 4 texels.</span><br>
+<img src="https://i.imgur.com/UopzL3x.jpg" alt="" loading="lazy"></p><pre><code>auto&amp; mip = mipmap[level];
+float u = float(uv[0] * mip.width);
+float v = float(uv[1] * mip.height);
+
+int u0 = floor(u);
+int u1 = ceil(u);
+int v0 = floor(v);
+int v1 = ceil(v);
+
+float s = u - u0;
+float t = v - v0;
+Color u00 = mip.get_texel(u0, v0);
+Color u01 = mip.get_texel(u0, v1);
+Color u10 = mip.get_texel(u1, v0);
+Color u11 = mip.get_texel(u1, v1);
+
+//horizontally then vertically lerp
+Color helper1 = lerp(s, u00, u01);
+Color helper2 = lerp(s, u01, u11);
+return lerp(t, helper1, helper2);
+</code></pre><p><span>We can notice in the examples below that bilinear sampling defeats nearest sampling. The edges are more smooth when looking at the top of the Campanile using bilinear sampling. This makes sense because bilinear sampling takes into account more samples when averaging (4) than nearest sampling (1) meaning that the image created used bilinear sampling will be more accurate.</span></p><p><strong><span>nearest sampling, subsample rate = 1</span></strong><br>
+<img src="https://i.imgur.com/EDNuOR6.png" alt="" loading="lazy"></p><p><strong><span>bilinear sampling, subsample rate = 1</span></strong><br>
+<img src="https://i.imgur.com/C8fxYB9.png" alt="" loading="lazy"></p><p><strong><span>nearest sampling, subsample rate = 16</span></strong><br>
+<img src="https://i.imgur.com/BAVKUHK.png" alt="" loading="lazy"></p><p><strong><span>bilinear sampling, subsample rate = 16</span></strong><br>
+<img src="https://i.imgur.com/5TUPLjJ.png" alt="" loading="lazy"></p><p><span>Since nearest sampling only takes one sample to determine the texture color, bilinear sampling will generally perform better on images with higher frequency. This is because nearest sampling will tend to miss out on some data of the image whereas bilinear sampling does a better job at maintaing the data.</span></p><p><span>One thing to note is that bilinear sampling and nearest sampling will produce similar images for higher resolutions of the same image, as there will be less variance between the neighboring pixels.</span></p><h1 id="Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping" data-id="Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping"><a class="anchor hidden-xs" href="#Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping" title="Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping"><span class="octicon octicon-link"></span></a><span>Task 6: “Level sampling” with mipmaps for texture mapping</span></h1><p><span>Level sampling is a way to reduce artifacts of textures for objects that are farther away from an image. As the level of the mipmap increases, the resolution lowers and allows us to render more texels for images that include parts that are farther away. We implemented it in texture mapping in a couple of different ways: L_ZERO, L_NEAREST, and L_LINEAR.</span></p><ul>
+<li><span>L_ZERO describes the case with zero level sampling.</span></li>
+<li><span>L_NEAREST computes the nearest level by sampling the pixel at (x+1, y) and (x, y + 1) and taking the norm of the differences</span></li>
+<li><span>L_LINEAR takes L_NEAREST one step farther by taking a weighted sum of the upper and lower levels that are returned by L_NEAREST.</span></li>
+</ul><p><span>We implemented level sampling through </span><code>get_level</code><span> and </span><code>sample</code><span>.</span></p><pre><code>    Color lerp(float t, Color a, Color b) {
+        return (1 - t) * a + t * b;
+
+    }
+
+  Color Texture::sample(const SampleParams&amp; sp) {
+    // Task 6: Fill this in.
+    if (sp.lsm == L_ZERO) {
+        return sp.psm == P_NEAREST ? sample_nearest(sp.p_uv, 0) : sample_bilinear(sp.p_uv, 0);
+    } else if (sp.lsm == L_NEAREST) {
+        int level = int(get_level(sp));
+        return sp.psm == P_NEAREST ? sample_nearest(sp.p_uv, level) : sample_bilinear(sp.p_uv, level);
+    } else if (sp.lsm == L_LINEAR) {
+        float level = get_level(sp);
+        Color higher, lower;
+        if (sp.psm == P_NEAREST) {
+            lower = sample_nearest(sp.p_uv, floor(level));
+            higher = sample_nearest(sp.p_uv, ceil(level));
+        } else if (sp.psm == P_LINEAR) {
+            //trilinear texture filtering
+            lower = sample_bilinear(sp.p_uv, floor(level));
+            higher = sample_bilinear(sp.p_uv, ceil(level));
+        }
+        return lerp(level - floor(level), lower, higher);
+    }
+    // return magenta for invalid level
+    return {1, 0, 1};
+  }
+
+  float Texture::get_level(const SampleParams&amp; sp) {
+    // Task 6: Fill this in.
+    Vector2D dx = sp.p_dx_uv - sp.p_uv;
+    dx.x *= width;
+    dx.y *= height;
+    Vector2D dy = sp.p_dy_uv - sp.p_uv;
+    dy.x *= width;
+    dy.y *= height;
+
+    float L = max(dx.norm(), dy.norm());
+    if (L &lt; 0) {
+        return 0;
+    } else if (L &gt;= mipmap.size()) {
+        return log2(mipmap.size() - 1);
+    }
+    return log2(L);
+  }
+</code></pre><p><span>There were 6 total combinations of pixel-level sampling methods, and we wrote conditionals for each one in the sample method. As for get_level, we utilized the formula from this lecture slide to derive the estimated level. I utilized the built-in norm function to calculate the norm for each of the vectors, and return the </span><code>log2</code><span> of the max.</span></p><p><img src="https://i.imgur.com/zFKB819.png" alt="Imgur" loading="lazy"></p><h3 id="Comparison-between-the-three-level-sample-techniques" data-id="Comparison-between-the-three-level-sample-techniques"><a class="anchor hidden-xs" href="#Comparison-between-the-three-level-sample-techniques" title="Comparison-between-the-three-level-sample-techniques"><span class="octicon octicon-link"></span></a><span>Comparison between the three level sample techniques</span></h3><p><span>As we increase the level, the render time and aliasing reduces for objects in the distance. This is because we are making our texture filtering more efficient for the higher level texels. However, we do make a sacrifice of memory because we need to allocate more space to store the mipmaps at different levels for a texture.</span></p><p><span>We can sometimes utilize level sampling in place of supersampling to prevent aliasing, as level sampling provides a speed advantage with the higher levels while achieving similar anti-aliasing effects.</span></p><p><span>These images are all with subsample rate = 1. Our childhood heroes: Minions.</span></p><p><strong><span>Zero Level - Bilinear Pixel Sampling</span></strong><br>
+<img src="https://i.imgur.com/ZomznTZ.png" alt="" loading="lazy"><br>
+<strong><span>Zero Level - Nearest Pixel Sampling</span></strong><br>
+<img src="https://i.imgur.com/NafrKck.png" alt="" loading="lazy"><br>
+<strong><span>Nearest Level - Bilinear Pixel Sampling</span></strong><br>
+<img src="https://i.imgur.com/arHA2fy.png" alt="" loading="lazy"><br>
+<strong><span>Nearest Level - Nearest Pixel Sampling</span></strong><br>
+<img src="https://i.imgur.com/81FAdkW.png" alt="" loading="lazy"><br>
+<strong><span>Bilinear Level - Bilinear Pixel Sampling</span></strong><br>
+<img src="https://i.imgur.com/pUutDKX.png" alt="" loading="lazy"><br>
+<strong><span>Bilinear Level - Nearest Pixel Sampling</span></strong><br>
+<img src="https://i.imgur.com/wN9GOOY.png" alt="" loading="lazy"></p><h4 id="Webpage-Link" data-id="Webpage-Link"><a class="anchor hidden-xs" href="#Webpage-Link" title="Webpage-Link"><span class="octicon octicon-link"></span></a><span>Webpage Link</span></h4><p><a href="https://cal-cs184-student.github.io/sp22-project-webpages-kevinchai0/proj1/index.html#Task-1-Drawing-Single-Color-Triangles" target="_blank" rel="noopener"><span>https://cal-cs184-student.github.io/sp22-project-webpages-kevinchai0/proj1/index.html#Task-1-Drawing-Single-Color-Triangles</span></a></p></div>
     <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
         <div class="pull-right dropdown">
             <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
                 <i class="fa fa-bars"></i>
             </a>
             <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
-                <div class="toc"><ul class="nav">
-<li class=""><a href="#CS-184-Project-1-Rasterizer" title="CS 184 Project 1: Rasterizer">CS 184 Project 1: Rasterizer</a></li>
+                <div class="toc expand"><ul class="nav">
+<li class=""><a href="#CS-184-Project-1-Rasterizer---Kenny-amp-Kevin-Chai" title="CS 184 Project 1: Rasterizer - Kenny &amp; Kevin Ch(a)i">CS 184 Project 1: Rasterizer - Kenny &amp; Kevin Ch(a)i</a></li>
 <li class=""><a href="#Task-1-Drawing-Single-Color-Triangles" title="Task 1: Drawing Single-Color Triangles">Task 1: Drawing Single-Color Triangles</a><ul class="nav">
 <li class="invisable-node"><ul class="nav">
 <li><a href="#Data-Structures" title="Data Structures">Data Structures</a></li>
@@ -126,16 +205,28 @@ float end[] = {min((float)width, max(x0, max(x1, x2))), min((float)height, max(y
 </li>
 <li><a href="#Task-3-Transforms" title="Task 3: Transforms">Task 3: Transforms</a></li>
 <li><a href="#Task-4-Barycentric-coordinates" title="Task 4: Barycentric coordinates!">Task 4: Barycentric coordinates!</a></li>
-<li><a href="#Task-5-“Pixel-sampling”-for-texture-mapping" title="Task 5: “Pixel sampling” for texture mapping">Task 5: “Pixel sampling” for texture mapping</a></li>
-<li class=""><a href="#Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping" title="Task 6: “Level sampling” with mipmaps for texture mapping">Task 6: “Level sampling” with mipmaps for texture mapping</a></li>
+<li><a href="#Task-5-“Pixel-sampling”-for-texture-mapping" title="Task 5: “Pixel sampling” for texture mapping">Task 5: “Pixel sampling” for texture mapping</a><ul class="nav">
+<li class="invisable-node"><ul class="nav">
+<li><a href="#Different-sampling-methods" title="Different sampling methods">Different sampling methods</a></li>
 </ul>
-</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+</li>
+</ul>
+</li>
+<li><a href="#Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping" title="Task 6: “Level sampling” with mipmaps for texture mapping">Task 6: “Level sampling” with mipmaps for texture mapping</a><ul class="nav">
+<li class="invisable-node"><ul class="nav">
+<li><a href="#Comparison-between-the-three-level-sample-techniques" title="Comparison between the three level sample techniques">Comparison between the three level sample techniques</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Collapse all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
             </ul>
         </div>
     </div>
     <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
-        <div class="toc"><ul class="nav">
-<li class=""><a href="#CS-184-Project-1-Rasterizer" title="CS 184 Project 1: Rasterizer">CS 184 Project 1: Rasterizer</a></li>
+        <div class="toc expand"><ul class="nav">
+<li class=""><a href="#CS-184-Project-1-Rasterizer---Kenny-amp-Kevin-Chai" title="CS 184 Project 1: Rasterizer - Kenny &amp; Kevin Ch(a)i">CS 184 Project 1: Rasterizer - Kenny &amp; Kevin Ch(a)i</a></li>
 <li class=""><a href="#Task-1-Drawing-Single-Color-Triangles" title="Task 1: Drawing Single-Color Triangles">Task 1: Drawing Single-Color Triangles</a><ul class="nav">
 <li class="invisable-node"><ul class="nav">
 <li><a href="#Data-Structures" title="Data Structures">Data Structures</a></li>
@@ -155,10 +246,22 @@ float end[] = {min((float)width, max(x0, max(x1, x2))), min((float)height, max(y
 </li>
 <li><a href="#Task-3-Transforms" title="Task 3: Transforms">Task 3: Transforms</a></li>
 <li><a href="#Task-4-Barycentric-coordinates" title="Task 4: Barycentric coordinates!">Task 4: Barycentric coordinates!</a></li>
-<li><a href="#Task-5-“Pixel-sampling”-for-texture-mapping" title="Task 5: “Pixel sampling” for texture mapping">Task 5: “Pixel sampling” for texture mapping</a></li>
-<li class=""><a href="#Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping" title="Task 6: “Level sampling” with mipmaps for texture mapping">Task 6: “Level sampling” with mipmaps for texture mapping</a></li>
+<li><a href="#Task-5-“Pixel-sampling”-for-texture-mapping" title="Task 5: “Pixel sampling” for texture mapping">Task 5: “Pixel sampling” for texture mapping</a><ul class="nav">
+<li class="invisable-node"><ul class="nav">
+<li><a href="#Different-sampling-methods" title="Different sampling methods">Different sampling methods</a></li>
 </ul>
-</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+</li>
+</ul>
+</li>
+<li><a href="#Task-6-“Level-sampling”-with-mipmaps-for-texture-mapping" title="Task 6: “Level sampling” with mipmaps for texture mapping">Task 6: “Level sampling” with mipmaps for texture mapping</a><ul class="nav">
+<li class="invisable-node"><ul class="nav">
+<li><a href="#Comparison-between-the-three-level-sample-techniques" title="Comparison between the three level sample techniques">Comparison between the three level sample techniques</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Collapse all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
