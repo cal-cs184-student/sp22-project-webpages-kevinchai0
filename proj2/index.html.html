@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        CS 184 Project 2: MeshEdit - Kenny &amp; Kevin Ch(a)i - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important;position:relative}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p:last-child{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{text-align:center;background-color:inherit;border-radius:0;white-space:inherit;overflow:visible}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p:last-child,.markdown-body .alert>ul:last-child{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.figma{display:table;position:relative;width:100%;padding-bottom:56.25%}.figma iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;border:1px solid #eee}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{height:40px;padding:10px 4px;border-top-left-radius:0;border-bottom-left-radius:0}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child>ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:50%;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;text-decoration:none;padding-left:22px}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em;font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="CS-184-Project-2-MeshEdit---Kenny-amp-Kevin-Chai" data-id="CS-184-Project-2-MeshEdit---Kenny-amp-Kevin-Chai"><a class="anchor hidden-xs" href="#CS-184-Project-2-MeshEdit---Kenny-amp-Kevin-Chai" title="CS-184-Project-2-MeshEdit---Kenny-amp-Kevin-Chai"><span class="octicon octicon-link"></span></a><span>CS 184 Project 2: MeshEdit - Kenny &amp; Kevin Ch(a)i</span></h1><p><span>This project involved two main sections. The first section involved working with Bezier Curves &amp; Surfaces. In this section, we created Bezier curves/surfaces using de Casteljau’s algorithm. The second section involved working with meshes and the half-edge data structure. We manipulated a lot of pointers with the data structure and used it to implement some basic functions like flipping or splitting edges. We also implemented loop subdivison to upscale our mesh and attempted to create our own mesh which was really fun!</span></p><p><span>Some of the interesting things that we’ve learned include different types of subdivision. We read </span><a href="https://graphics.pixar.com/opensubdiv/docs/subdivision_surfaces.html" target="_blank" rel="noopener"><span>this article</span></a><span> written by Pixar on the ways that they have subdivided surfaces. Looking at the differences between subdivision and tessellation seemed very interesting and the ways to interpolate at boundaries was also interesting. This project leads us to think a lot more about exploration deeper into this topic, which was very interesting.</span></p><h2 id="Section-I-Bezier-Curves-and-Surfaces" data-id="Section-I-Bezier-Curves-and-Surfaces"><a class="anchor hidden-xs" href="#Section-I-Bezier-Curves-and-Surfaces" title="Section-I-Bezier-Curves-and-Surfaces"><span class="octicon octicon-link"></span></a><span>Section I: Bezier Curves and Surfaces</span></h2><h3 id="Part-1-Bezier-curves-with-1D-de-Casteljau-subdivision" data-id="Part-1-Bezier-curves-with-1D-de-Casteljau-subdivision"><a class="anchor hidden-xs" href="#Part-1-Bezier-curves-with-1D-de-Casteljau-subdivision" title="Part-1-Bezier-curves-with-1D-de-Casteljau-subdivision"><span class="octicon octicon-link"></span></a><span>Part 1: Bezier curves with 1D de Casteljau subdivision</span></h3><p><span>De Casteljau’s algorithm is a way to evaluate Bezier Curves. The algorithm takes in n points and recursively interpolating points and creating new line segments. The algorithm stops when we cannot create any line segments as we have no more control points left. Then, we are left with a point that lies on the Bezier Curve.</span></p><p><img src="https://i.imgur.com/ShkYcgG.jpg" alt="" loading="lazy"></p><p><span>This algorithm relies on a ratio t (ranging from 0 to 1) that determines how far we evaluate the point on each line segment.</span></p><p><img src="https://i.imgur.com/HQXGWYE.png" alt="" loading="lazy"></p><p><span>Our implementation evaluated one step of the de Casteljau’s algorithm using given points and the value of t. We followed the following formula to calculate either the next step (vector of intermediate points) or the final interpolated vector.</span></p><p><img src="https://i.imgur.com/GLc8KnP.png" alt="" loading="lazy"></p><h4 id="Example-Bezier-curve" data-id="Example-Bezier-curve"><a class="anchor hidden-xs" href="#Example-Bezier-curve" title="Example-Bezier-curve"><span class="octicon octicon-link"></span></a><span>Example Bezier curve</span></h4><p><code>step 1</code><br>
+<img src="https://i.imgur.com/DQqMxFz.png" alt="" loading="lazy"></p><p><code>step 2</code><br>
+<img src="https://i.imgur.com/ZBGiP8N.png" alt="" loading="lazy"></p><p><code>step 3</code><br>
+<img src="https://i.imgur.com/gzFDpLF.png" alt="" loading="lazy"></p><p><code>step 4</code><br>
+<img src="https://i.imgur.com/m9bfj77.png" alt="" loading="lazy"></p><p><code>step 5</code><br>
+<img src="https://i.imgur.com/MZfX6Jo.png" alt="" loading="lazy"></p><p><code>step 6</code><br>
+<img src="https://i.imgur.com/5CB1lAD.png" alt="" loading="lazy"></p><p><code>final curve</code><br>
+<img src="https://i.imgur.com/GWasm63.png" alt="" loading="lazy"></p><h4 id="Another-Example-Bezier-curve" data-id="Another-Example-Bezier-curve"><a class="anchor hidden-xs" href="#Another-Example-Bezier-curve" title="Another-Example-Bezier-curve"><span class="octicon octicon-link"></span></a><span>Another Example Bezier curve</span></h4><p><code>modified points and t</code><br>
+<img src="https://i.imgur.com/h7oPaBb.png" alt="" loading="lazy"></p><h3 id="Part-2-Bezier-surfaces-with-separable-1D-de-Casteljau-subdivision" data-id="Part-2-Bezier-surfaces-with-separable-1D-de-Casteljau-subdivision"><a class="anchor hidden-xs" href="#Part-2-Bezier-surfaces-with-separable-1D-de-Casteljau-subdivision" title="Part-2-Bezier-surfaces-with-separable-1D-de-Casteljau-subdivision"><span class="octicon octicon-link"></span></a><span>Part 2: Bezier surfaces with separable 1D de Casteljau subdivision</span></h3><p><span>This part involved extending de Casteljau’s algorithm to Bezier surfaces. Bezier surfaces are parametric surfaces defined by a 2D grid of control points.</span></p><p><span>In order to accomplish this, we first had to evaluate point </span><code>u</code><span> for the 4 Bezier curves in the u dimension. We then used de Casteljau’s to evaluate point </span><code>v</code><span> and return a point that lies on the Bezier surface.</span></p><p><span>To be more specific: we are given an n x n grid of control points and the parameters </span><code>u, v</code><span>. Given these control points, we can define a Bezier curve using u and each row of control points. Using 1D de Casteljau’s we can evaluate a single point on this Bezier curve, </span><strong><span>P1</span></strong><span>. Then using </span><strong><span>P1</span></strong><span>, we can use 1D de Casteljau find a single point </span><strong><span>P</span></strong><span> that lies on the Bezier Surface.</span><br>
+<img src="https://i.imgur.com/0p58ePt.png" alt="" loading="lazy"></p><p><span>To implement this, we first had to implement the following functions:</span></p><pre><code>evaluateStep (3D): evaluates a single step of de Casteljau's for points in 3D
+evaluate1D: fully evaluates de Casteljau's for points in 3D
+evaluate: evaluates Bezier patch given parameters u and v
+</code></pre><p><span>Using these functions, we called </span><code>evaluate1D</code><span> on each row of control points using u (the size of our control points). Then we called </span><code>evaluate1D</code><span> again on the result of the previous calls using v.</span></p><p><span>Here is a picture of our teapot after implementation:</span></p><p><img src="https://i.imgur.com/rT76cZX.png" alt="" loading="lazy"></p><p><span>No wireframe:</span></p><p><img src="https://i.imgur.com/RRSTocw.png" alt="Imgur" loading="lazy"></p><h2 id="Section-II-Loop-Subdivision-of-General-Triangle-Meshes" data-id="Section-II-Loop-Subdivision-of-General-Triangle-Meshes"><a class="anchor hidden-xs" href="#Section-II-Loop-Subdivision-of-General-Triangle-Meshes" title="Section-II-Loop-Subdivision-of-General-Triangle-Meshes"><span class="octicon octicon-link"></span></a><span>Section II: Loop Subdivision of General Triangle Meshes</span></h2><h3 id="Part-3-Average-normals-for-half-edge-meshes" data-id="Part-3-Average-normals-for-half-edge-meshes"><a class="anchor hidden-xs" href="#Part-3-Average-normals-for-half-edge-meshes" title="Part-3-Average-normals-for-half-edge-meshes"><span class="octicon octicon-link"></span></a><span>Part 3: Average normals for half-edge meshes</span></h3><p><span>In this part, we implemented Phong shading using vector normals which provides better shading for smooth surfaces. In order to implement area-weighted normal vectors at vertices we first looked at </span><code>printNeighborPositions(...)</code><span> to understand how to iterate through faces incident to a vertex. We travesed through all of the neighboring triangles and used </span><code>face-&gt;normal()</code><span> to calculate the normal for each face. We added all of the normals to a Vector3D that we intialized with all zeroes. At the end, we returned the unit vector of our Vector3D. Since we used </span><code>face-&gt;normal()</code><span> we had to ensure that we handled boundaries correctly and skipped over them.</span></p><pre><code>    Vector3D N( 0., 0., 0. );
+
+    HalfedgeCIter h = halfedge();      // get the outgoing half-edge of the vertex
+    do {
+      HalfedgeCIter h_twin = h-&gt;twin(); // get the opposite half-edge
+      VertexCIter v = h_twin-&gt;vertex(); // vertex is the 'source' of the half-edge, so
+      if (!h-&gt;isBoundary()) {
+        VertexCIter v = h_twin-&gt;vertex();
+        N += h-&gt;face()-&gt;normal();
+      }
+      h = h_twin-&gt;next();               // move to the next outgoing half-edge of the vertex
+    } while(h != halfedge());          // keep going until we are back where we were
+    return N.unit();
+</code></pre><p><span>If we didn’t use </span><code>face-&gt;normal()</code><span>, we would compute the normal of each face by getting the cross product of two vectors along the face. We would able to get all the vertices of the triangle to get these two vectors by using </span><code>-&gt;next()</code><span>. We would then add the results of the cross product to our Vector3D and return the unit vector of Vector3D. We don’t have to check for boundaries because the other method is meant to deal with faces that aren’t planar. We included the code for both solutions in the repository.</span></p><pre><code>    Vector3D N( 0., 0., 0. );
+    HalfedgeCIter h = halfedge();      // get the outgoing half-edge of the vertex
+    Vector3D center = h-&gt;vertex()-&gt;position;
+    do {
+      h = h-&gt;twin(); // get the opposite half-edge
+      Vector3D p1 = h-&gt;vertex()-&gt;position;
+      Vector3D v1 = p1 - center;
+      h = h-&gt;next()-&gt;twin();
+      Vector3D p2 = h-&gt;vertex()-&gt;position;
+      Vector3D v2 = p2 - center;
+      N += cross(v2, v1);
+      h = h-&gt;twin();               // move to the next outgoing half-edge of the vertex
+    } while(h != halfedge());          // keep going until we are back where we were
+    cout &lt;&lt; N.unit() &lt;&lt; endl;
+    return N.unit();
+</code></pre><p><code>flat shading</code><br>
+<img src="https://i.imgur.com/jPVROmq.png" alt="" loading="lazy"></p><p><code>Phong shading with vector normals</code><br>
+<img src="https://i.imgur.com/1gQV0AP.png" alt="" loading="lazy"></p><p><code>Phong shading with GLSL shader 1</code><br>
+<img src="https://i.imgur.com/oha0LYU.png" alt="Imgur" loading="lazy"></p><h3 id="Part-4-Half-edge-flip" data-id="Part-4-Half-edge-flip"><a class="anchor hidden-xs" href="#Part-4-Half-edge-flip" title="Part-4-Half-edge-flip"><span class="octicon octicon-link"></span></a><span>Part 4: Half-edge flip</span></h3><p><span>Implementing the half-edge flip was very confusing. It was hard to keep track of the pointers. We first identified all of the elements of our mesh (half-edges, vertices, edges, faces). After identifying these elements, we used </span><code>setNeighbors(...)</code><span> in order to set the pointers of all of our half-edges at once. Finally, we had to update the half-edge pointers of our vertices, edges, and faces. It was also important to make sure that we were not flipping a boundary edge.</span></p><p><span>This drawing really helped us out when it came time to writing the code since we just referenced it for the pointers.</span></p><p><img src="https://i.imgur.com/eaMCrgG.png" alt="" loading="lazy"></p><p><span>In terms of debugging, this part was pretty frustrating since the code was sort of messy and hard to identify errors. Something that helped us out was drawing an example mesh and identifying all the elements before and after flipping.</span></p><p><span>Our debugging journey was very tedious. We were both very frustrated since it seemed like we were staring at our code for hours without knowing what the problem was. Checking the pointers several times definitely helped us out and it was especailly useful to take a break and look at the code later with fresh eyes. We were able to find our bugs almost immediately after taking a little break.</span></p><p><span>One bug that took us a long time to solve was how to reassign the next and face pointers for the outside edges (</span><code>h6, h7, h8, h9</code><span> in the drawing above). We realized that we could just use the </span><code>next()</code><span> and </span><code>face()</code><span> functions to reassign them to the same values as before.</span></p><pre><code>// setting all pointers for face 1
+h3-&gt;setNeighbors(h5, h0, v3, e0, f1);
+h5-&gt;setNeighbors(h1, h9, v2, e1, f1);
+h1-&gt;setNeighbors(h3, h6, v1, e4, f1);
+
+h6-&gt;setNeighbors(h6-&gt;next(), h1, v3, e4, h6-&gt;face());
+h9-&gt;setNeighbors(h9-&gt;next(), h5, v1, e1, h9-&gt;face());
+</code></pre><p><code>teapot before half-edge flips</code><br>
+<img src="https://i.imgur.com/OKMpff3.png" alt="" loading="lazy"></p><p><code>teapot after several half-edge flips</code><br>
+<img src="https://i.imgur.com/YUEODYq.png" alt="" loading="lazy"></p><h3 id="Part-5-Half-edge-split" data-id="Part-5-Half-edge-split"><a class="anchor hidden-xs" href="#Part-5-Half-edge-split" title="Part-5-Half-edge-split"><span class="octicon octicon-link"></span></a><span>Part 5: Half-edge split</span></h3><p><span>Implementing half-edge split was similar to implementing half-edge flip but with some more nuances. In half-edge split, we had to create new elements. More specifically, we had to create 1 new vertex, 2 new faces, 3 new edges (with one being an extension of the original middle edge), and 6 new half-edges. We followed the same process as part 4 by drawing out a figure of what the mesh elements should be after a split. We then just followed the drawing and used </span><code>setNeighbors(...)</code><span> to set mesh elements. Then we set the half-edges of the vertices, edges, and faces.</span></p><p><img src="https://i.imgur.com/rLL9wh3.png" alt="" loading="lazy"></p><p><span>Using our diagrams was very helpful in debugging and implementing this part. We drew a diagram online and used it to assign all the pointers.</span></p><p><img src="https://i.imgur.com/DdVMnF0.jpg" alt="Imgur" loading="lazy"></p><h4 id="Debugging" data-id="Debugging"><a class="anchor hidden-xs" href="#Debugging" title="Debugging"><span class="octicon octicon-link"></span></a><span>Debugging</span></h4><p><span>This time, we knew that we just needed to use the </span><code>next()</code><span> and </span><code>face()</code><span> functions to assign the half edges on the outside </span><code>h6, h7, h8, h9</code><span>. We also assigned things systematically, which helped us organize our thoughts more.</span></p><p><span>First, we identified all the current vertices, edges, half edges, and faces.</span></p><pre><code>HalfedgeIter h0 = e0-&gt;halfedge();
+FaceIter f0 = h0-&gt;face();
+VertexIter v0 = h0-&gt;vertex();
+HalfedgeIter h1 = h0-&gt;next();
+EdgeIter e4 = h1-&gt;edge();
+HalfedgeIter h2 = h1-&gt;next();
+VertexIter v3 = h2-&gt;vertex();
+EdgeIter e3 = h2-&gt;edge();
+...
+</code></pre><p><span>Then, we created all the new entities that we needed.</span></p><pre><code>VertexIter v4 = newVertex();
+EdgeIter e5 = newEdge();
+EdgeIter e6 = newEdge();
+EdgeIter e7 = newEdge();
+HalfedgeIter h10 = newHalfedge();
+HalfedgeIter h11 = newHalfedge();
+HalfedgeIter h12 = newHalfedge();
+HalfedgeIter h13 = newHalfedge();
+HalfedgeIter h14 = newHalfedge();
+HalfedgeIter h15 = newHalfedge();
+FaceIter f2 = newFace();
+FaceIter f3 = newFace();
+</code></pre><p><span>Finally, we went one face at a time and assigned the relevant pointers. This is face f0.</span></p><pre><code>h0-&gt;setNeighbors(h10, h12, v3, e5, f0);
+h10-&gt;setNeighbors(h1, h11, v4, e0, f0);
+h1-&gt;setNeighbors(h0, h6, v1, e4, f0);
+h6-&gt;setNeighbors(h6-&gt;next(), h1, v3, e4, h6-&gt;face());
+</code></pre><h4 id="Edge-Split-Photos" data-id="Edge-Split-Photos"><a class="anchor hidden-xs" href="#Edge-Split-Photos" title="Edge-Split-Photos"><span class="octicon octicon-link"></span></a><span>Edge Split Photos</span></h4><p><code>before any modifications</code><br>
+<img src="https://i.imgur.com/i4nm0Yn.png" alt="" loading="lazy"></p><p><code>after edge splits</code><br>
+<img src="https://i.imgur.com/K0D7vjM.png" alt="" loading="lazy"></p><p><code>after edge splits and edge flips</code><br>
+<img src="https://i.imgur.com/ydgomhq.png" alt="" loading="lazy"></p><h3 id="Part-6-Loop-subdivision-for-mesh-upsampling" data-id="Part-6-Loop-subdivision-for-mesh-upsampling"><a class="anchor hidden-xs" href="#Part-6-Loop-subdivision-for-mesh-upsampling" title="Part-6-Loop-subdivision-for-mesh-upsampling"><span class="octicon octicon-link"></span></a><span>Part 6: Loop subdivision for mesh upsampling</span></h3><p><span>This part involved implementing loop subdivison to upsample our meshes. First, we computed the new positions for all vertices in our input mesh in </span><code>upsample(...)</code><span>. We stored them in the vertices’ newPosition. To calculate the new position, we used the Loop subdivison rule below.</span></p><p><img src="https://i.imgur.com/BoyYjev.png" alt="" loading="lazy"></p><p><span>Next, we computed the vertex positions splitting the shared edge using the below formula.</span></p><p><img src="https://i.imgur.com/IsqmmOM.png" alt="" loading="lazy"></p><p><span>While computing the previous two steps, we were also sure to mark the eges and vertices we traversed as not new.</span></p><p><span>Then, we split every edge in the original mesh. When splitting these edges, we also had to make sure to mark the new edges we created as new. This was tricky because we create 3 new edges when splitting, but only 2 of them are new. We updated our </span><code>splitedge(...)</code><span> function from part 5 to account for this.</span></p><pre><code>e5-&gt;isNew = true;
+e6-&gt;isNew = true;
+e0-&gt;isNew = false;
+e7-&gt;isNew = false;
+v4-&gt;isNew = true;
+</code></pre><p><span>When checking whether we should split an edge or not, we checked if the two adjacent vertices were both old.</span></p><p><span>After splitting the edges, we had to flip any edge that connected an old and new vertex.</span></p><p><span>Finally, we copied all the new vertex positions we have calculated from the above steps into their final positions.</span></p><p><span>Some debugging steps that we took include checking that our split and flip functions worked correctly, as we realized that we had a small bug in the split function. Then, we ran through some examples using the two triangle drawing above, which allowed us to figure out which edges and vertices to set as new, and what they’re new/old positions were.</span></p><h4 id="Sharp-corners-and-edges" data-id="Sharp-corners-and-edges"><a class="anchor hidden-xs" href="#Sharp-corners-and-edges" title="Sharp-corners-and-edges"><span class="octicon octicon-link"></span></a><span>Sharp corners and edges</span></h4><p><span>With sharp corners, the degree of the corner drastically affects how it will be upsampled. If the degree is higher, it will become a sharper corner. If the degree is lesser, it will get smoothened out to a curve. We can reduce the effect of smoothening everything out by splitting the corners before upsampling. This can be seen in the images below.</span></p><p><code>original torus shape</code><br>
+<img src="https://i.imgur.com/7ByWWLK.png" alt="original torus" loading="lazy"></p><p><code>original torus upsampled</code><br>
+<img src="https://i.imgur.com/fsz0V6Z.png" alt="torus upsampled" loading="lazy"></p><p><code>torus with higher degree vertex</code><br>
+<img src="https://i.imgur.com/0DxfOek.png" alt="torus high degree vertex" loading="lazy"></p><p><code>torus with higher degree vertex upsampled</code><br>
+<img src="https://i.imgur.com/Ai7tIpq.png" alt="torus with higher degree vertex upsampled" loading="lazy"></p><p><code>no wireframe</code><br>
+<img src="https://i.imgur.com/z2lPrBS.png" alt="no wireframe" loading="lazy"></p><p><span>We can reduce the effects of asymmetry by splitting the edges evenly. Otherwise, we can end up with images like the last two, where the original mesh looked fine but after upsampling the vertex with the higher degree sharpened compared to the rest of the image.</span></p><p><span>Noe, we can pre-process </span><code>cube.dae</code><span> by splitting each of the edges on the faces to increase its symmetry. This way, when we split and flip the edges later they won’t be skewed toward one direction.</span></p><p><code>original cube with mesh upsampling</code><br>
+<img src="https://i.imgur.com/YUidfti.png" alt="original cube" loading="lazy"></p><p><code>cube with split edges before mesh upsampling</code><br>
+<img src="https://i.imgur.com/E4QQEmt.png" alt="cube split edges" loading="lazy"></p><p><code>cube with split edges with mesh upsampling</code><br>
+<img src="https://i.imgur.com/UyDfbMv.png" alt="cube split edges upsampling" loading="lazy"></p><p><span>As you can see, adding 6 split edges allowed us to change the upsampling of the mesh drastically. This occurs because now each corner of the cube is splitting at the same rate, which will allow us to have the same upsampling effects on each corner. We made all of the corners of the cube have the same degree, which is critical as to how they’re going to split in the upsampling.</span></p><p><span>Pre-processing alleviates these skewing effects by making sure that the model is more symmetric before splitting, as any asymmetries will be emphasized when upsampling, resulting in some corners of the image being more “smoothened out” by the upsampling and others being sharper.</span></p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#CS-184-Project-2-MeshEdit---Kenny-amp-Kevin-Chai" title="CS 184 Project 2: MeshEdit - Kenny &amp; Kevin Ch(a)i">CS 184 Project 2: MeshEdit - Kenny &amp; Kevin Ch(a)i</a><ul class="nav">
+<li><a href="#Section-I-Bezier-Curves-and-Surfaces" title="Section I: Bezier Curves and Surfaces">Section I: Bezier Curves and Surfaces</a><ul class="nav">
+<li><a href="#Part-1-Bezier-curves-with-1D-de-Casteljau-subdivision" title="Part 1: Bezier curves with 1D de Casteljau subdivision">Part 1: Bezier curves with 1D de Casteljau subdivision</a></li>
+<li><a href="#Part-2-Bezier-surfaces-with-separable-1D-de-Casteljau-subdivision" title="Part 2: Bezier surfaces with separable 1D de Casteljau subdivision">Part 2: Bezier surfaces with separable 1D de Casteljau subdivision</a></li>
+</ul>
+</li>
+<li class=""><a href="#Section-II-Loop-Subdivision-of-General-Triangle-Meshes" title="Section II: Loop Subdivision of General Triangle Meshes">Section II: Loop Subdivision of General Triangle Meshes</a><ul class="nav">
+<li><a href="#Part-3-Average-normals-for-half-edge-meshes" title="Part 3: Average normals for half-edge meshes">Part 3: Average normals for half-edge meshes</a></li>
+<li><a href="#Part-4-Half-edge-flip" title="Part 4: Half-edge flip">Part 4: Half-edge flip</a></li>
+<li><a href="#Part-5-Half-edge-split" title="Part 5: Half-edge split">Part 5: Half-edge split</a></li>
+<li class=""><a href="#Part-6-Loop-subdivision-for-mesh-upsampling" title="Part 6: Loop subdivision for mesh upsampling">Part 6: Loop subdivision for mesh upsampling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#CS-184-Project-2-MeshEdit---Kenny-amp-Kevin-Chai" title="CS 184 Project 2: MeshEdit - Kenny &amp; Kevin Ch(a)i">CS 184 Project 2: MeshEdit - Kenny &amp; Kevin Ch(a)i</a><ul class="nav">
+<li><a href="#Section-I-Bezier-Curves-and-Surfaces" title="Section I: Bezier Curves and Surfaces">Section I: Bezier Curves and Surfaces</a><ul class="nav">
+<li><a href="#Part-1-Bezier-curves-with-1D-de-Casteljau-subdivision" title="Part 1: Bezier curves with 1D de Casteljau subdivision">Part 1: Bezier curves with 1D de Casteljau subdivision</a></li>
+<li><a href="#Part-2-Bezier-surfaces-with-separable-1D-de-Casteljau-subdivision" title="Part 2: Bezier surfaces with separable 1D de Casteljau subdivision">Part 2: Bezier surfaces with separable 1D de Casteljau subdivision</a></li>
+</ul>
+</li>
+<li class=""><a href="#Section-II-Loop-Subdivision-of-General-Triangle-Meshes" title="Section II: Loop Subdivision of General Triangle Meshes">Section II: Loop Subdivision of General Triangle Meshes</a><ul class="nav">
+<li><a href="#Part-3-Average-normals-for-half-edge-meshes" title="Part 3: Average normals for half-edge meshes">Part 3: Average normals for half-edge meshes</a></li>
+<li><a href="#Part-4-Half-edge-flip" title="Part 4: Half-edge flip">Part 4: Half-edge flip</a></li>
+<li><a href="#Part-5-Half-edge-split" title="Part 5: Half-edge split">Part 5: Half-edge split</a></li>
+<li class=""><a href="#Part-6-Loop-subdivision-for-mesh-upsampling" title="Part 6: Loop subdivision for mesh upsampling">Part 6: Loop subdivision for mesh upsampling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
