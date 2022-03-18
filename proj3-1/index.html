@@ -1,7 +1,319 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 3-1 here
-	</body>
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        CS 184 Project 3-1: Pathtracer 1 - Kenny &amp; Kevin Ch(a)i - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important;position:relative}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p:last-child{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{text-align:center;background-color:inherit;border-radius:0;white-space:inherit;overflow:visible}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p:last-child,.markdown-body .alert>ul:last-child{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.figma{display:table;position:relative;width:100%;padding-bottom:56.25%}.figma iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;border:1px solid #eee}.markmap-container{height:300px}.markmap-container>svg{width:100%;height:100%}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{height:40px;padding:10px 4px;border-top-left-radius:0;border-bottom-left-radius:0}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child>ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:50%;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;text-decoration:none;padding-left:22px}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em;font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="CS-184-Project-3-1-Pathtracer-1---Kenny-amp-Kevin-Chai" data-id="CS-184-Project-3-1-Pathtracer-1---Kenny-amp-Kevin-Chai"><a class="anchor hidden-xs" href="#CS-184-Project-3-1-Pathtracer-1---Kenny-amp-Kevin-Chai" title="CS-184-Project-3-1-Pathtracer-1---Kenny-amp-Kevin-Chai"><span class="octicon octicon-link"></span></a><span>CS 184 Project 3-1: Pathtracer 1 - Kenny &amp; Kevin Ch(a)i</span></h1><h2 id="Part-1-Ray-Generation-and-Scene-Intersection" data-id="Part-1-Ray-Generation-and-Scene-Intersection"><a class="anchor hidden-xs" href="#Part-1-Ray-Generation-and-Scene-Intersection" title="Part-1-Ray-Generation-and-Scene-Intersection"><span class="octicon octicon-link"></span></a><span>Part 1: Ray Generation and Scene Intersection</span></h2><h4 id="Ray-Generation" data-id="Ray-Generation"><a class="anchor hidden-xs" href="#Ray-Generation" title="Ray-Generation"><span class="octicon octicon-link"></span></a><span>Ray Generation</span></h4><p><span>We implemented ray generation through the transformation image given to us in the spec. We started by defining the top left and bottom right corners of the virtual camera sensor, and we used these to generate image coordinates in the camera space, which were then converted to rays in the world space.</span></p><p><img src="https://i.imgur.com/lqZAtrr.png" alt="task 1 reference" loading="lazy"></p><p><span>After converting the (x, y) coordinates to the camera space adn then subsequently to the world space, we needed to normalize the ray and then give it an initial position (equivalent to the camera’s position in the world space) and initial </span><code>min_t</code><span> and </span><code>max_t</code><span>, which were set to </span><code>nClip</code><span> and </span><code>fClip</code><span> respectively because those were the maximum and minimum viewing space for the camera.</span></p><h4 id="Triangle-Intersection-Algorithm" data-id="Triangle-Intersection-Algorithm"><a class="anchor hidden-xs" href="#Triangle-Intersection-Algorithm" title="Triangle-Intersection-Algorithm"><span class="octicon octicon-link"></span></a><span>Triangle Intersection Algorithm</span></h4><p><span>The triangle intersection algorithm tests whether there is an intersection between a ray and a triangle. We followed the Möller–Trumbore intersection algorithm to test for intersections and to also update the Intersection data.</span></p><p><img src="https://i.imgur.com/ebART6Z.png" alt="" loading="lazy"></p><p><span>We basically created </span><code>e1 and e2</code><span> using the given triangle </span><code>p1, p2, and p3</code><span> values. We were also able to calculate all the </span><code>s</code><span> values using the previous </span><code>p</code><span> values and also the properties of the ray (origin + direction).</span></p><p><span>After doing some math with these values, we are able to calculate the barycentric coordinates and also the t value. If the t value is valid, then we update some properties of the intersection including its bdsf, primitive, normal surface, and also the max_t field of the ray. The checks we did to make sure that the t value is valid includes making sure it’s between </span><code>r.min_t and r.max_t</code><span> and also that the barycentric coordinates summed to 1.</span></p><h4 id="Sample-Images" data-id="Sample-Images"><a class="anchor hidden-xs" href="#Sample-Images" title="Sample-Images"><span class="octicon octicon-link"></span></a><span>Sample Images</span></h4><p><em><span>this is an image showing normal shaded spheres</span></em><br>
+<img src="https://i.imgur.com/iNayAJV.png" alt="normal shading spheres" loading="lazy"><br>
+<em><span>this is an image showing empty room normal shaded</span></em><br>
+<img src="https://i.imgur.com/9uK19Bd.png" alt="normal shading empty" loading="lazy"></p><h4 id="Problems-that-we-encountered" data-id="Problems-that-we-encountered"><a class="anchor hidden-xs" href="#Problems-that-we-encountered" title="Problems-that-we-encountered"><span class="octicon octicon-link"></span></a><span>Problems that we encountered</span></h4><p><span>Some problems that we encountered with the triangle intersection algorithm were that we didn’t realize that </span><code>b0</code><span>, the first barycentric coordinate, was supposed to multiplied by n1 to update the surface normal at the intersection. We initially had</span></p><p><code>isect-&gt;n = n1 * b1 + n2 * b2 + n3 * b3; </code></p><p><span>where b3 = (1.0 - b1 - b2).</span></p><p><span>However, after paying more attention to the actual algorithm, we realized our bug and changed it to</span></p><p><code>isect-&gt;n = n1 * b0 + n2 * b1 + n3 * b2;</code></p><h2 id="Part-2-Bounding-Volume-Hierarchy" data-id="Part-2-Bounding-Volume-Hierarchy"><a class="anchor hidden-xs" href="#Part-2-Bounding-Volume-Hierarchy" title="Part-2-Bounding-Volume-Hierarchy"><span class="octicon octicon-link"></span></a><span>Part 2: Bounding Volume Hierarchy</span></h2><p><span>Walk through your BVH construction algorithm. Explain the heuristic you chose for picking the splitting point.</span></p><h4 id="BVH-construction" data-id="BVH-construction"><a class="anchor hidden-xs" href="#BVH-construction" title="BVH-construction"><span class="octicon octicon-link"></span></a><span>BVH construction</span></h4><p><span>We constructed our BVH by dividing the primitives into two partitions based on the mean of the longest axis.</span></p><p><span>We started by creating a new BVH Node that could contain all of our primitives, with this being the central node. Then, we figured out the mean of the longest axis, and used </span><code>std::partition</code><span> to partition our primitive vector into two sets. We then recursively called </span><code>construct_bvh</code><span> on the first and second halves of the set.</span></p><p><span>We figured that using the mean of the longest axis is relatively efficient, as this allows us to guarantee that the subsequent bounding boxes on the node’s children don’t intersect on the longest axis.</span></p><p><span>We were also able to avoid the problem of the infinite recursion because of </span><code>std::partition</code><span>, which allows us to always keep at least one element on the second partition of the list.</span></p><p><em><span>BVH Visualization Mode</span></em><br>
+<img src="https://i.imgur.com/QXEhmVG.png" alt="bvh step 1" loading="lazy"><br>
+<em><span>next step</span></em><br>
+<img src="https://i.imgur.com/U3B1oZd.png" alt="bvh step 2" loading="lazy"></p><h4 id="Sample-Large-Images" data-id="Sample-Large-Images"><a class="anchor hidden-xs" href="#Sample-Large-Images" title="Sample-Large-Images"><span class="octicon octicon-link"></span></a><span>Sample Large Images</span></h4><p><em><span>This is an image of max planck. Our previous render time before BVH was around 45 seconds. After BVH we could render it in approx 0.02s</span></em><br>
+<img src="https://i.imgur.com/xYk0cOu.png" alt="max planck" loading="lazy"><br>
+<em><span>This statue image originally took us around 70s to render without BVH. After BVH it took us around 0.05s to render</span></em><br>
+<img src="https://i.imgur.com/lugyoBP.png" alt="c blucy" loading="lazy"></p><h4 id="Comparing-the-results-of-BVH-acceleration" data-id="Comparing-the-results-of-BVH-acceleration"><a class="anchor hidden-xs" href="#Comparing-the-results-of-BVH-acceleration" title="Comparing-the-results-of-BVH-acceleration"><span class="octicon octicon-link"></span></a><span>Comparing the results of BVH acceleration</span></h4><p><span>BVH acceleration greatly increased the rate at which we could render the triangles. This is because we reduced runtime from linear (O(N)) to logarithmic (O(log(n))) with the structure of the BVH tree and our heuristic. With BVH acceleration, we can actually just ignore any primitives that don’t intersect our bounding box. As noted in the above images, BVH acceleration greatly decreased the rendering times for images with larger amounts of triangles. We were basically able to render images in &lt; 1 second while it took over a minute beforehand.</span></p><h4 id="Bugs" data-id="Bugs"><a class="anchor hidden-xs" href="#Bugs" title="Bugs"><span class="octicon octicon-link"></span></a><span>Bugs</span></h4><p><span>One bug that we ran into that took us a long time to solve was short circuiting on the recursive traversal of the BVH tree. We had our recursive calls with an </span><code>||</code><span> and we didn’t realize that it short circuited and never called the right side of the tree if an intersection was found in the left. This left us with this image for a while.</span></p><p><img src="https://i.imgur.com/5gk3OBY.png" alt="bad max" loading="lazy"></p><h2 id="Part-3-Direct-Illumination" data-id="Part-3-Direct-Illumination"><a class="anchor hidden-xs" href="#Part-3-Direct-Illumination" title="Part-3-Direct-Illumination"><span class="octicon octicon-link"></span></a><span>Part 3: Direct Illumination</span></h2><p><span>Walk through both implementations of the direct lighting function.</span><br>
+<span>Show some images rendered with both implementations of the direct lighting function.</span></p><h4 id="Uniform-Hemisphere-Sampling" data-id="Uniform-Hemisphere-Sampling"><a class="anchor hidden-xs" href="#Uniform-Hemisphere-Sampling" title="Uniform-Hemisphere-Sampling"><span class="octicon octicon-link"></span></a><span>Uniform Hemisphere Sampling</span></h4><p><span>In the uniform direct lighting function, our goal was to estimate the direct lighting on a point by sampling uniformly in the hemisphere. In order to estimtae this light, we had to approximate how much light arrived at an intersection point using a Monte Carlo Estimator.</span></p><p><img src="https://i.imgur.com/cqm6kIK.png" alt="" loading="lazy"></p><p><span>Once we had incoming light, we could use the reflection equation to solve for outgoing light.</span></p><p><img src="https://i.imgur.com/5QswNn9.png" alt="" loading="lazy"></p><p><span>In our code, we first defined our probability density function as </span><code>2 * PI</code><span>. Then we iterated for all of the samples and sampled the hemisphere using </span><code>hemishpereSampler-&gt;get_sample()</code><span>. After getting our sample, we created a new Ray using the given </span><code>hit_p</code><span> and our hemisphere sample’s direction translated to the world-space. Then we checked if there was an intersection with our BVH and the new ray. If there is an intersection we calculate the irradiance by multiplying our emitted radiance with the bdsf and a cosine term and add it to our result. We also ensure to divide by num_samples at the end.</span></p><h4 id="Importance-Lighting-Sampling" data-id="Importance-Lighting-Sampling"><a class="anchor hidden-xs" href="#Importance-Lighting-Sampling" title="Importance-Lighting-Sampling"><span class="octicon octicon-link"></span></a><span>Importance Lighting Sampling</span></h4><p><span>In Importance Lighting Sampling, our goal is to sample all lights directly rather than uniform directions. We sampled directions between the light source and </span><code>hit_p</code><span>.</span></p><p><img src="https://i.imgur.com/zPxuLUI.png" alt="" loading="lazy"></p><p><span>Our algorithm is very similar to Uniform Hemisphere Sampling. Instead of iterating for num_samples, we iterate through all the lights in the scence. We check if the light is a point light source by using </span><code>is_delta_light()</code><span>. If true, we only sample once and set num_samples to 1. Otherwise, we sample ns_area_light number of times.</span></p><p><span>After knowing how many samples we need to make, we iterate over that many times and call sample_L() which gives us emitted radiance, a direction in world-space, the distance between hit_p and the light sourcce, and our pdf. We first converted our direction vector into object space and made sure that it’s z-value was not negative. Then, we created a new shadow ray using our hit_point, direction vector, and distance to light source from hit_p. Instead of checking for intersections, we check that this ray does not intersect our BVH since that means that the light source casts light onto the hitpoint. We calculate irradiance again by multiplying by the bdsf and a cosine term and adding it to our return value. We also make sure to divide by num_samples.</span></p><h4 id="Different-light-rays-with-one-sample-per-pixel" data-id="Different-light-rays-with-one-sample-per-pixel"><a class="anchor hidden-xs" href="#Different-light-rays-with-one-sample-per-pixel" title="Different-light-rays-with-one-sample-per-pixel"><span class="octicon octicon-link"></span></a><span>Different light rays with one sample per pixel</span></h4><p><em><span>1 light ray 1 sample per pixel</span></em><br>
+<img src="https://i.imgur.com/yuLrOWW.png" alt="1_1" loading="lazy"><br>
+<em><span>4 light ray 1 sample per pixel</span></em><br>
+<img src="https://i.imgur.com/vmlHDaL.png" alt="1_4" loading="lazy"><br>
+<em><span>16 light ray 1 sample per pixel</span></em><br>
+<img src="https://i.imgur.com/EfpMwtr.png" alt="1_16" loading="lazy"><br>
+<em><span>64 light ray 1 sample per pixel</span></em><br>
+<img src="https://i.imgur.com/w0pHsmN.png" alt="1_64" loading="lazy"></p><p><span>The noise level of the soft shadows was much higher with less light rays. At 16 light rays we can begin to differentiate the details of the dragons scales. This is a result of the increased number of light rays, which gives us a better mean luminance in the location. We can also make our luminance more accurate by gathering more samples in the PDF.</span></p><h4 id="Uniform-Hemisphere-Sampling-vs-Importance-Lighting-Sampling" data-id="Uniform-Hemisphere-Sampling-vs-Importance-Lighting-Sampling"><a class="anchor hidden-xs" href="#Uniform-Hemisphere-Sampling-vs-Importance-Lighting-Sampling" title="Uniform-Hemisphere-Sampling-vs-Importance-Lighting-Sampling"><span class="octicon octicon-link"></span></a><span>Uniform Hemisphere Sampling vs Importance Lighting Sampling</span></h4><p><span>Uniform Hemisphere sampling results in more noise in the image due to the randomness in sampling across the hemisphere. This contrasts with lighting sampling, which prioritizes the importance of light samples. In this way, we are adding samples where there is an intersection with the ray and the object, and thus will have a positive luminance and will result in a smoother image. The black dots from uniform hemisphere sampling are a result of the incoming radiance in some areas being zero and the lack of samples in some other areas.</span></p><h2 id="Part-4-Global-Illumination" data-id="Part-4-Global-Illumination"><a class="anchor hidden-xs" href="#Part-4-Global-Illumination" title="Part-4-Global-Illumination"><span class="octicon octicon-link"></span></a><span>Part 4: Global Illumination</span></h2><h4 id="Implementation" data-id="Implementation"><a class="anchor hidden-xs" href="#Implementation" title="Implementation"><span class="octicon octicon-link"></span></a><span>Implementation</span></h4><p><span>Our indirect lighting function mirrors similar logic that we used for the direct lighting functions. To implement indirect lighting, we implemented </span><code>at_least_one_bounce_radiance()</code><span>. This function uses Russian Roulette as an unbiased method of random termination. We chose 0.35 as our termination probability. We also checked that our </span><code>max_depth</code><span> was greater than 1 and that were not currently at our max_depth. We also called </span><code>sample_f</code><span> using w_out and saving the outputs to save the wi and pdf. Then, we created a new ray using hit_p and the wi converted to the world-space. Using this new ray, we had to check if there was an intersection. If there was no intersection, we would just return (just the one_bounce_radiance).</span></p><p><span>We then recursively called </span><code>at_least_once_bounce_radiance()</code><span> account for the extra bounces. At the end, we multiply the extra bounces with our emitted radiance and a cosine term. We sum this with our call to </span><code>one_bounce_radiance()</code><span> and return L_out.</span></p><p><span>We also had to do other misc. tasks like updating est_radiance_global_illumination to call </span><code>at_least_once_bounce</code><span> instead of </span><code>one_bounce_radiance</code><span>.</span></p><h4 id="Global-Illumination-Images" data-id="Global-Illumination-Images"><a class="anchor hidden-xs" href="#Global-Illumination-Images" title="Global-Illumination-Images"><span class="octicon octicon-link"></span></a><span>Global Illumination Images</span></h4><p><em><span>CBbunny.dae with global illumniation</span></em><br>
+<img src="https://i.imgur.com/bf1RVwa.png" alt="bunny mrd 3, spp 1024" loading="lazy"></p><p><em><span>CBspheres_lambertian.dae with global illumniation</span></em><br>
+<img src="https://i.imgur.com/XLV0WVL.png" alt="sphere mrd 5, spp 1024" loading="lazy"></p><h4 id="Direct-and-Indirect-illumination" data-id="Direct-and-Indirect-illumination"><a class="anchor hidden-xs" href="#Direct-and-Indirect-illumination" title="Direct-and-Indirect-illumination"><span class="octicon octicon-link"></span></a><span>Direct and Indirect illumination</span></h4><p><em><span>direct lighting only with 1024 samples per pixel</span></em><br>
+<img src="https://i.imgur.com/veIAo9S.png" alt="direct 1024" loading="lazy"></p><p><em><span>indirect lighting only with 1024 samples per pixel</span></em><br>
+<img src="https://i.imgur.com/SW1DbFB.png" alt="indirect 1024" loading="lazy"></p><h4 id="CBbunnydae-rendered-views" data-id="CBbunnydae-rendered-views"><a class="anchor hidden-xs" href="#CBbunnydae-rendered-views" title="CBbunnydae-rendered-views"><span class="octicon octicon-link"></span></a><span>CBbunny.dae rendered views</span></h4><p><em><span>max ray depth: 0, samples per pixel: 1024</span></em><br>
+<img src="https://i.imgur.com/7f0hoDh.png" alt="mdr 0, spp 1024" loading="lazy"><br>
+<em><span>max ray depth: 1, samples per pixel: 1024</span></em><br>
+<img src="" alt="mdr 1, spp 1024" loading="lazy"><br>
+<em><span>max ray depth: 2, samples per pixel: 1024</span></em><br>
+<img src="" alt="mdr 2, spp 1024" loading="lazy"><br>
+<em><span>max ray depth: 3, samples per pixel: 1024</span></em><br>
+<img src="https://i.imgur.com/bf1RVwa.png" alt="mrd 3, spp 1024" loading="lazy"><br>
+<em><span>max ray depth: 100, samples per pixel: 1024</span></em><br>
+<img src="" alt="mdr 100, spp 1024" loading="lazy"></p><h4 id="Blob-rendering-with-different-sample-per-pixel-rates" data-id="Blob-rendering-with-different-sample-per-pixel-rates"><a class="anchor hidden-xs" href="#Blob-rendering-with-different-sample-per-pixel-rates" title="Blob-rendering-with-different-sample-per-pixel-rates"><span class="octicon octicon-link"></span></a><span>Blob rendering with different sample per pixel rates</span></h4><p><em><span>4 light rays, 1 sample per pixel</span></em><br>
+<img src="https://i.imgur.com/BpiIA8w.png" alt="blob 1spp" loading="lazy"><br>
+<em><span>4 light rays, 2 samples per pixel</span></em><br>
+<img src="https://i.imgur.com/kyaKZLs.png" alt="blob 2spp" loading="lazy"><br>
+<em><span>4 light rays, 4 samples per pixel</span></em><br>
+<img src="https://i.imgur.com/HGH6ATC.png" alt="blob 4spp" loading="lazy"><br>
+<em><span>4 light rays, 8 samples per pixel</span></em><br>
+<img src="https://i.imgur.com/jHkWIRh.png" alt="blob 8spp" loading="lazy"><br>
+<em><span>4 light rays, 16 samples per pixel</span></em><br>
+<img src="https://i.imgur.com/BokOZRg.png" alt="blob 16spp" loading="lazy"><br>
+<em><span>4 light rays, 64 samples per pixel</span></em><br>
+<img src="https://i.imgur.com/7JDWgQH.png" alt="blob 64spp" loading="lazy"><br>
+<em><span>4 light rays, 1024 samples per pixel</span></em><br>
+<img src="https://i.imgur.com/0fbhChG.png" alt="blob 1024spp" loading="lazy"></p><h2 id="Part-5-Adaptive-Sampling" data-id="Part-5-Adaptive-Sampling"><a class="anchor hidden-xs" href="#Part-5-Adaptive-Sampling" title="Part-5-Adaptive-Sampling"><span class="octicon octicon-link"></span></a><span>Part 5: Adaptive Sampling</span></h2><p><span>Walk through your implementation of the adaptive sampling.</span></p><h4 id="Implementation1" data-id="Implementation"><a class="anchor hidden-xs" href="#Implementation1" title="Implementation1"><span class="octicon octicon-link"></span></a><span>Implementation</span></h4><p><span>Adaptive sampling is a way for us to deal with the issue of some pixels converging faster while other pixels require more samples to deal with noise. The algorithm detects if a pixel has converged as we trace ray samples through it.</span></p><p><span>To implement adaptive sampling, we had to keep track of two new variables: </span><code>s1 and s2</code><span>.</span></p><p><img src="https://i.imgur.com/cipb6Hz.png" alt="" loading="lazy"></p><p><span>s1 is the running sum of the illuminance</span><br>
+<span>s2 is the running squared sum of illuminance</span></p><p><span>We then used these values to calcuate the mean and squared variance which were then later used to calculate each pixel’s convergence (I).</span></p><p><img src="https://i.imgur.com/nzggPN1.png" alt="" loading="lazy"></p><p><span>We then chcked (every 32 samples) if the convergence was </span><code>&lt;= maxTolerance * mean</code><span>. If it was, then the pixel has converged and we can stop tracing more rays for that pixel.</span></p><p><span>Pick one scene and render it with at least 2048 samples per pixel. Show a good sampling rate image with clearly visible differences in sampling rate over various regions and pixels. Include both your sample rate image, which shows your how your adaptive sampling changes depending on which part of the image you are rendering, and your noise-free rendered result. Use 1 sample per light and at least 5 for max ray depth.</span></p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#CS-184-Project-3-1-Pathtracer-1---Kenny-amp-Kevin-Chai" title="CS 184 Project 3-1: Pathtracer 1 - Kenny &amp; Kevin Ch(a)i">CS 184 Project 3-1: Pathtracer 1 - Kenny &amp; Kevin Ch(a)i</a><ul class="nav">
+<li class=""><a href="#Part-1-Ray-Generation-and-Scene-Intersection" title="Part 1: Ray Generation and Scene Intersection">Part 1: Ray Generation and Scene Intersection</a><ul class="nav">
+<li class=""><a href="#Ray-Generation" title="Ray Generation">Ray Generation</a></li>
+<li class=""><a href="#Triangle-Intersection-Algorithm" title="Triangle Intersection Algorithm">Triangle Intersection Algorithm</a></li>
+<li class=""><a href="#Sample-Images" title="Sample Images">Sample Images</a></li>
+<li><a href="#Problems-that-we-encountered" title="Problems that we encountered">Problems that we encountered</a></li>
+</ul>
+</li>
+<li><a href="#Part-2-Bounding-Volume-Hierarchy" title="Part 2: Bounding Volume Hierarchy">Part 2: Bounding Volume Hierarchy</a><ul class="nav">
+<li><a href="#BVH-construction" title="BVH construction">BVH construction</a></li>
+<li><a href="#Sample-Large-Images" title="Sample Large Images">Sample Large Images</a></li>
+<li><a href="#Comparing-the-results-of-BVH-acceleration" title="Comparing the results of BVH acceleration">Comparing the results of BVH acceleration</a></li>
+<li><a href="#Bugs" title="Bugs">Bugs</a></li>
+</ul>
+</li>
+<li><a href="#Part-3-Direct-Illumination" title="Part 3: Direct Illumination">Part 3: Direct Illumination</a><ul class="nav">
+<li><a href="#Uniform-Hemisphere-Sampling" title="Uniform Hemisphere Sampling">Uniform Hemisphere Sampling</a></li>
+<li><a href="#Importance-Lighting-Sampling" title="Importance Lighting Sampling">Importance Lighting Sampling</a></li>
+<li><a href="#Different-light-rays-with-one-sample-per-pixel" title="Different light rays with one sample per pixel">Different light rays with one sample per pixel</a></li>
+<li><a href="#Uniform-Hemisphere-Sampling-vs-Importance-Lighting-Sampling" title="Uniform Hemisphere Sampling vs Importance Lighting Sampling">Uniform Hemisphere Sampling vs Importance Lighting Sampling</a></li>
+</ul>
+</li>
+<li><a href="#Part-4-Global-Illumination" title="Part 4: Global Illumination">Part 4: Global Illumination</a><ul class="nav">
+<li><a href="#Implementation" title="Implementation">Implementation</a></li>
+<li><a href="#Global-Illumination-Images" title="Global Illumination Images">Global Illumination Images</a></li>
+<li><a href="#Direct-and-Indirect-illumination" title="Direct and Indirect illumination">Direct and Indirect illumination</a></li>
+<li><a href="#CBbunnydae-rendered-views" title="CBbunny.dae rendered views">CBbunny.dae rendered views</a></li>
+<li><a href="#Blob-rendering-with-different-sample-per-pixel-rates" title="Blob rendering with different sample per pixel rates">Blob rendering with different sample per pixel rates</a></li>
+</ul>
+</li>
+<li><a href="#Part-5-Adaptive-Sampling" title="Part 5: Adaptive Sampling">Part 5: Adaptive Sampling</a><ul class="nav">
+<li><a href="#Implementation1" title="Implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#CS-184-Project-3-1-Pathtracer-1---Kenny-amp-Kevin-Chai" title="CS 184 Project 3-1: Pathtracer 1 - Kenny &amp; Kevin Ch(a)i">CS 184 Project 3-1: Pathtracer 1 - Kenny &amp; Kevin Ch(a)i</a><ul class="nav">
+<li class=""><a href="#Part-1-Ray-Generation-and-Scene-Intersection" title="Part 1: Ray Generation and Scene Intersection">Part 1: Ray Generation and Scene Intersection</a><ul class="nav">
+<li class=""><a href="#Ray-Generation" title="Ray Generation">Ray Generation</a></li>
+<li class=""><a href="#Triangle-Intersection-Algorithm" title="Triangle Intersection Algorithm">Triangle Intersection Algorithm</a></li>
+<li class=""><a href="#Sample-Images" title="Sample Images">Sample Images</a></li>
+<li><a href="#Problems-that-we-encountered" title="Problems that we encountered">Problems that we encountered</a></li>
+</ul>
+</li>
+<li><a href="#Part-2-Bounding-Volume-Hierarchy" title="Part 2: Bounding Volume Hierarchy">Part 2: Bounding Volume Hierarchy</a><ul class="nav">
+<li><a href="#BVH-construction" title="BVH construction">BVH construction</a></li>
+<li><a href="#Sample-Large-Images" title="Sample Large Images">Sample Large Images</a></li>
+<li><a href="#Comparing-the-results-of-BVH-acceleration" title="Comparing the results of BVH acceleration">Comparing the results of BVH acceleration</a></li>
+<li><a href="#Bugs" title="Bugs">Bugs</a></li>
+</ul>
+</li>
+<li><a href="#Part-3-Direct-Illumination" title="Part 3: Direct Illumination">Part 3: Direct Illumination</a><ul class="nav">
+<li><a href="#Uniform-Hemisphere-Sampling" title="Uniform Hemisphere Sampling">Uniform Hemisphere Sampling</a></li>
+<li><a href="#Importance-Lighting-Sampling" title="Importance Lighting Sampling">Importance Lighting Sampling</a></li>
+<li><a href="#Different-light-rays-with-one-sample-per-pixel" title="Different light rays with one sample per pixel">Different light rays with one sample per pixel</a></li>
+<li><a href="#Uniform-Hemisphere-Sampling-vs-Importance-Lighting-Sampling" title="Uniform Hemisphere Sampling vs Importance Lighting Sampling">Uniform Hemisphere Sampling vs Importance Lighting Sampling</a></li>
+</ul>
+</li>
+<li><a href="#Part-4-Global-Illumination" title="Part 4: Global Illumination">Part 4: Global Illumination</a><ul class="nav">
+<li><a href="#Implementation" title="Implementation">Implementation</a></li>
+<li><a href="#Global-Illumination-Images" title="Global Illumination Images">Global Illumination Images</a></li>
+<li><a href="#Direct-and-Indirect-illumination" title="Direct and Indirect illumination">Direct and Indirect illumination</a></li>
+<li><a href="#CBbunnydae-rendered-views" title="CBbunny.dae rendered views">CBbunny.dae rendered views</a></li>
+<li><a href="#Blob-rendering-with-different-sample-per-pixel-rates" title="Blob rendering with different sample per pixel rates">Blob rendering with different sample per pixel rates</a></li>
+</ul>
+</li>
+<li><a href="#Part-5-Adaptive-Sampling" title="Part 5: Adaptive Sampling">Part 5: Adaptive Sampling</a><ul class="nav">
+<li><a href="#Implementation1" title="Implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
 </html>
